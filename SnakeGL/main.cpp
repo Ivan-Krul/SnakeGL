@@ -1,5 +1,6 @@
 ﻿#include <windows.h>
 #include <gl/gl.h>
+#include "glSupport.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "winmm.lib")
@@ -7,11 +8,6 @@
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
-
-void glDotd(GLdouble x, GLdouble y, GLdouble r, GLdouble g, GLdouble b) {
-	glColor3d(r, g, b);
-	glVertex2d(x, y);
-}
 
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -97,11 +93,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				glClear(GL_COLOR_BUFFER_BIT);
 
 				glRotated(1, 0, 0, 1);
-				glBegin(GL_TRIANGLES);
-				glDotd(-1.0, -1.0, 1.0, 0.0, 0.0);
-				glDotd(1.0, 0.0, 0.0, 1.0, 0.0);
-				glDotd(-1.0, 1.0, 0.0, 0.0, 1.0);
-				glEnd();
+
+				glSupport::glRectangled(0.25, 0.25, -0.25, -0.25, 1, 1, 0);
 
 				SwapBuffers(hDC);
 
