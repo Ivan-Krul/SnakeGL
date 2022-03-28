@@ -23,5 +23,8 @@
     <ClInclude Include="glSupport.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="soundSupport.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
