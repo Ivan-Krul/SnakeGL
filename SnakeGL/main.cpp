@@ -1,6 +1,7 @@
 ﻿#include <windows.h>
-#include <gl/gl.h>
+#include <gl/GL.h>
 #include "glSupport.h"
+#include "UITuner.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "winmm.lib")
@@ -24,6 +25,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	bool is_pause = false;
 	size_t t = 0;
+	UITuner ux;
 
 	/* register window class */
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -86,15 +88,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		{
 			if (GetAsyncKeyState(' ')) { is_pause = !is_pause; Sleep(100); }
 
-			/* OpenGL animation code goes here */
 			if (!is_pause) {
-
+				/* OpenGL animation code goes here */
 				glClearColor(0, 0, 0, 0.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 
 				glRotated(1, 0, 0, 1);
 
-				glSupport::glRectangled(0.25, 0.25, -0.25, -0.25, 1, 1, 0);
+				
+				glSupport::glRectangled(0.25, 0.25, -0.25, -0.25, ux.madeInterpolate((sin(t*0.01)+1.0)/2.0));
 
 				SwapBuffers(hDC);
 

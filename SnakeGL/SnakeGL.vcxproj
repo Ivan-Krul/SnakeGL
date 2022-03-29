@@ -140,10 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="UITuner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glSupport.h" />
+    <ClInclude Include="mathSupport.h" />
     <ClInclude Include="soundSupport.h" />
+    <ClInclude Include="UITuner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
