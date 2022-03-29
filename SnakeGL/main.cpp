@@ -6,6 +6,9 @@
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "winmm.lib")
 
+int sx = 500;
+int sy = 500;
+
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
@@ -23,9 +26,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	BOOL bQuit = FALSE;
 	float theta = 0.0f;
 
+	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
 	bool is_pause = false;
 	size_t t = 0;
-	UITuner ux;
+	UITuner ux (sx,sy);
+	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
 
 	/* register window class */
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -52,8 +57,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		512,
-		512,
+		sx,
+		sy,
 		NULL,
 		NULL,
 		hInstance,
@@ -93,10 +98,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				glClearColor(0, 0, 0, 0.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 
-				glRotated(1, 0, 0, 1);
+				//glRotated(1, 0, 0, 1);
 
-				
-				glSupport::glRectangled(0.25, 0.25, -0.25, -0.25, ux.madeInterpolate((sin(t*0.01)+1.0)/2.0));
+				glSupport::glRectangled(ux.madeSquish(0, 0), ux.madeSquish(1, 1), ux.madeInterpolate((cos((t) * 0.01) + 1.0) / 2.0));
+
 
 				SwapBuffers(hDC);
 

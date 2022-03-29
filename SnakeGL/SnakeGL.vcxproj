@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -140,10 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="UITuner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glSupport.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="mathSupport.h" />
     <ClInclude Include="soundSupport.h" />
     <ClInclude Include="UITuner.h" />
