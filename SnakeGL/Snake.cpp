@@ -35,7 +35,7 @@ void Snake::move(Keys tar) {
 }
 
 void Snake::coliderTail() {
-	for (int i = 1;i < tail.size() && isAlive;i++)
+	for (int i = 1;i < tail.size() && alive;i++)
 		if (tail[0] == tail[i])
 			alive = false;
 }

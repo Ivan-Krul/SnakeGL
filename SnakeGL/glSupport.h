@@ -63,11 +63,11 @@ namespace glSupport {
 
 	void glCircled(GLdouble x, GLdouble y, GLuint nPoly, GLdouble radius, GLdouble r, GLdouble g, GLdouble b) {
 		glBegin(GL_TRIANGLE_FAN);
-		glDotd(x, y, r, g, b);
+		glDotd(x,y, r, g, b);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {
-			int rx = sin(a * i) * radius + x;
-			int ry = cos(a * i) * radius + y;
+			double rx = sin(a * i) * radius + x;
+			double ry = cos(a * i) * radius + y;
 			glDotd(rx, ry, r, g, b);
 		}
 		glEnd();
@@ -77,8 +77,8 @@ namespace glSupport {
 		glDotd(xy, r, g, b);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {
-			int rx = sin(a * i) * radius + xy.X;
-			int ry = cos(a * i) * radius + xy.Y;
+			double rx = sin(a * i) * radius + xy.X;
+			double ry = cos(a * i) * radius + xy.Y;
 			glDotd(rx, ry, r, g, b);
 		}
 		glEnd();
@@ -88,8 +88,8 @@ namespace glSupport {
 		glDotd(x, y, rgb);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {
-			int rx = sin(a * i) * radius + x;
-			int ry = cos(a * i) * radius + y;
+			double rx = sin(a * i) * radius + x;
+			double ry = cos(a * i) * radius + y;
 			glDotd(rx, ry, rgb);
 		}
 		glEnd();
@@ -99,8 +99,53 @@ namespace glSupport {
 		glDotd(xy, rgb);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {
-			int rx = sin(a * i) * radius + xy.X;
-			int ry = cos(a * i) * radius + xy.Y;
+			double rx = sin(a * i) * radius + xy.X;
+			double ry = cos(a * i) * radius + xy.Y;
+			glDotd(rx, ry, rgb);
+		}
+		glEnd();
+	}
+
+	void glCircled(GLdouble x, GLdouble y, GLuint nPoly, GLdouble radius, GLdouble r, GLdouble g, GLdouble b) {
+		glBegin(GL_TRIANGLE_FAN);
+		glDotd(x, y, r, g, b);
+		double a = M_PI * 2.0 / nPoly;
+		for (int i = 0;i <= nPoly;i++) {
+			double rx = sin(a * i) * radius + x;
+			double ry = cos(a * i) * radius + y;
+			glDotd(rx, ry, r, g, b);
+		}
+		glEnd();
+	}
+	void glCircled(mathSupport::vec2 xy, GLuint nPoly, GLdouble radius, GLdouble r, GLdouble g, GLdouble b) {
+		glBegin(GL_TRIANGLE_FAN);
+		glDotd(xy, r, g, b);
+		double a = M_PI * 2.0 / nPoly;
+		for (int i = 0;i <= nPoly;i++) {
+			double rx = sin(a * i) * radius + xy.X;
+			double ry = cos(a * i) * radius + xy.Y;
+			glDotd(rx, ry, r, g, b);
+		}
+		glEnd();
+	}
+	void glCircled(GLdouble x, GLdouble y, GLuint nPoly, GLdouble radius, mathSupport::vec3 rgb) {
+		glBegin(GL_TRIANGLE_FAN);
+		glDotd(x, y, rgb);
+		double a = M_PI * 2.0 / nPoly;
+		for (int i = 0;i <= nPoly;i++) {
+			double rx = sin(a * i) * radius + x;
+			double ry = cos(a * i) * radius + y;
+			glDotd(rx, ry, rgb);
+		}
+		glEnd();
+	}
+	void glCircled(mathSupport::vec2 xy, GLuint nPoly, GLdouble radius, mathSupport::vec3 rgb) {
+		glBegin(GL_TRIANGLE_FAN);
+		glDotd(xy, rgb);
+		double a = M_PI * 2.0 / nPoly;
+		for (int i = 0;i <= nPoly;i++) {
+			double rx = sin(a * i) * radius + xy.X;
+			double ry = cos(a * i) * radius + xy.Y;
 			glDotd(rx, ry, rgb);
 		}
 		glEnd();

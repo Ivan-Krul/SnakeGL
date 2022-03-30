@@ -1,5 +1,6 @@
 ﻿#include <windows.h>
 #include <gl/GL.h>
+#include <chrono>
 #include "glSupport.h"
 #include "UITuner.h"
 
@@ -71,6 +72,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//PlaySoundW(L"D:\\Chrome Downloads\\sound\\YinYang_WhenImByYou.wav", NULL, SND_ASYNC);
 
+	std::chrono::system_clock::time_point beg, end;
+
 	/* program main loop */
 	while (!bQuit)
 	{
@@ -91,24 +94,29 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		}
 		else
 		{
+			beg = std::chrono::system_clock::now();
 			if (GetAsyncKeyState(' ')) { is_pause = !is_pause; Sleep(100); }
 
 			if (!is_pause) {
 				/* OpenGL animation code goes here */
-				glClearColor(0, 0, 0, 0.0f);
-				glClear(GL_COLOR_BUFFER_BIT);
+				//glClearColor(0, 0, 0, 0.0f);
+				//glClear(GL_COLOR_BUFFER_BIT);
 
 				//glRotated(1, 0, 0, 1);
 
-				glSupport::glRectangled(ux.madeSquish(0, 0), ux.madeSquish(1, 1), ux.madeColorInterpolate((cos((t) * 0.01) + 1.0) / 2.0));
-
+				glSupport::glRectangled(ux.madeSquish(0, 0), ux.madeSquish((cos(t*0.001*M_PI)+1.0)/2.0* ux.getSizeX() / ux.getResolX(), 1), ux.madeColorInterpolate((cos((t) * 0.01) + 1.0) / 2.0));
+				glSupport::glCircled(ux.madeSquish(rand()%(ux.getSizeX()/ ux.getResolX()), rand() % (ux.getSizeY() / ux.getResolY())), 5, (double(ux.getResolX() + ux.getResolY()) / 2.0)/ (double(ux.getSizeX() + ux.getSizeY()) / 2.0), ux.appleColor());
 
 				SwapBuffers(hDC);
 
 				theta += 1.0f;
 				t++;
 			}
-			Sleep(1);
+
+			end = std::chrono::system_clock::now();
+			int time = std::chrono::duration_cast<std::chrono::nanoseconds>(end-beg).count();
+			time /= 100;
+			Sleep(1 + 16/(time));
 		}
 	}
 
