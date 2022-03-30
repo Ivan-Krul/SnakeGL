@@ -100,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 				//glRotated(1, 0, 0, 1);
 
-				glSupport::glRectangled(ux.madeSquish(0, 0), ux.madeSquish(1, 1), ux.madeInterpolate((cos((t) * 0.01) + 1.0) / 2.0));
+				glSupport::glRectangled(ux.madeSquish(0, 0), ux.madeSquish(1, 1), ux.madeColorInterpolate((cos((t) * 0.01) + 1.0) / 2.0));
 
 
 				SwapBuffers(hDC);

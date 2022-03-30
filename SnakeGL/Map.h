@@ -1,11 +1,24 @@
 #pragma once
 class Map {
-public:
 	char* map;
-	int x;
-	int y;
+	unsigned int x;
+	unsigned int y;
+public:
+	Map(unsigned int x, unsigned int y);
 
-	Map(int x, int y);
+	void fill(char what);
+
+	unsigned int getX() {
+		return x;
+	}
+
+	unsigned int getY() {
+		return y;
+	}
+
+	char getMap(unsigned int x, unsigned int y);
+
+	void setMap(unsigned int x, unsigned int y, char what);
 
 	~Map() {
 		delete[] map;

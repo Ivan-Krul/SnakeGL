@@ -11,20 +11,29 @@ class Snake {
 public:
 	static enum Keys { N = 0, E, S, W } dir;
 
-	Snake(int mX, int mY) {
-		pair<int, int> s;
-		s.first = rand() % mX;
-		s.second = rand() % mY;
-		tail.push_back(s);
-	}
+	Snake(int mX, int mY);
 
 	void move(Keys tar);
 
 	void coliderTail();
 
+	int getSize() {
+		return tail.size();
+	}
+
+	pair<int, int> getPosition(unsigned int ind) {
+		return tail[ind < tail.size()?ind:tail.size()-1];
+	}
+
 	bool isAlive() {
 		return alive;
 	}
+
+	void addTail() {
+		tail.push_back(tail[tail.size() - 1]);
+	}
+
+	void teleport(int x, int y);
 
 	void madeDeath() {
 		alive = false;
