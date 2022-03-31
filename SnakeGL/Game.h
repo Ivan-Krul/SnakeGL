@@ -26,6 +26,16 @@ class Game {
 		}
 	}
 
+	void Action(Snake::Keys dir) {
+		if (snake.isAlive()) {
+			snake.move(dir);
+			apple.isEat(snake, map);
+			int sx = snake.getPosition(0).first;
+			int sy = snake.getPosition(0).second;
+			if (map.getMap(sx, sy) == S_Wall) snake.madeDeath();
+		}
+	}
+
 	void Write() {
 		map.fill(S_Void);
 
@@ -38,15 +48,14 @@ class Game {
 			}
 		}
 
-		for (int i = 0;i < snake.getSize();i++) {
+		for (int i = 0;i < snake.getSize();i++)
+			map.setMap(snake.getPosition(i).first, snake.getPosition(i).second, S_Snake);
 
-		}
-
-
+		map.setMap(apple.x, apple.y, S_Apple);
 	}
 
-	void Action() {
-
+	char* executeMap() {
+		return map.executeMap();
 	}
 
 };

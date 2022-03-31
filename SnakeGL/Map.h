@@ -18,6 +18,10 @@ public:
 		return y;
 	}
 
+	char* executeMap() {
+		return map;
+	}
+
 	char getMap(unsigned int x, unsigned int y);
 
 	void setMap(unsigned int x, unsigned int y, char what);
