@@ -1,7 +1,7 @@
 #include "Snake.h"
 #include "mathSupport.h"
 
-Snake::Snake(int mX, int mY) {
+void Snake::setup(int mX, int mY) {
 	pair<int, int> s;
 	s.first = rand() % mX;
 	s.second = rand() % mY;

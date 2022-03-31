@@ -1,6 +1,6 @@
 #include "Map.h"
 
-Map::Map(unsigned int x, unsigned int y) {
+void Map::setup(unsigned int x, unsigned int y) {
 	this->x = x;
 	this->y = y;
 

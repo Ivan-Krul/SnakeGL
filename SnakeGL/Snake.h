@@ -11,7 +11,9 @@ class Snake {
 public:
 enum Keys { N = 0, E, S, W } dir;
 
-	Snake(int mX, int mY);
+	Snake() {}
+
+	void setup(int mX, int mY);
 
 	void move(Keys tar);
 

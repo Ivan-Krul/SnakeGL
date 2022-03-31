@@ -4,7 +4,9 @@ class Map {
 	unsigned int x;
 	unsigned int y;
 public:
-	Map(unsigned int x, unsigned int y);
+	Map() {}
+
+	void setup(unsigned int x, unsigned int y);
 
 	void fill(char what);
 

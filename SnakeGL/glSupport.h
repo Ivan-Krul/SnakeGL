@@ -106,41 +106,43 @@ namespace glSupport {
 		glEnd();
 	}
 
-	void glCircled(GLdouble x, GLdouble y, GLuint nPoly, GLdouble radius, GLdouble r, GLdouble g, GLdouble b) {
+	void glCirclebd(GLdouble x, GLdouble y, GLuint nPoly, GLdouble radius, GLdouble bias, GLdouble r, GLdouble g, GLdouble b) {
 		glBegin(GL_TRIANGLE_FAN);
-		glDotd(x, y, r, g, b);
+		glDotd(x + bias, y + bias, r, g, b);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {
-			double rx = sin(a * i) * radius + x;
-			double ry = cos(a * i) * radius + y;
+			double rx = sin(a * i) * radius + x + bias;
+			double ry = cos(a * i) * radius + y + bias;
 			glDotd(rx, ry, r, g, b);
 		}
 		glEnd();
 	}
-	void glCircled(mathSupport::vec2 xy, GLuint nPoly, GLdouble radius, GLdouble r, GLdouble g, GLdouble b) {
+	void glCirclebd(mathSupport::vec2 xy, GLuint nPoly, GLdouble radius, GLdouble bias, GLdouble r, GLdouble g, GLdouble b) {
 		glBegin(GL_TRIANGLE_FAN);
+		xy = xy + bias;
 		glDotd(xy, r, g, b);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {
-			double rx = sin(a * i) * radius + xy.X;
-			double ry = cos(a * i) * radius + xy.Y;
+			double rx = sin(a * i) * radius + xy.X + bias;
+			double ry = cos(a * i) * radius + xy.Y + bias;
 			glDotd(rx, ry, r, g, b);
 		}
 		glEnd();
 	}
-	void glCircled(GLdouble x, GLdouble y, GLuint nPoly, GLdouble radius, mathSupport::vec3 rgb) {
+	void glCirclebd(GLdouble x, GLdouble y, GLuint nPoly, GLdouble radius, GLdouble bias, mathSupport::vec3 rgb) {
 		glBegin(GL_TRIANGLE_FAN);
-		glDotd(x, y, rgb);
+		glDotd(x + bias, y + bias, rgb);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {
-			double rx = sin(a * i) * radius + x;
-			double ry = cos(a * i) * radius + y;
+			double rx = sin(a * i) * radius + x + bias;
+			double ry = cos(a * i) * radius + y + bias;
 			glDotd(rx, ry, rgb);
 		}
 		glEnd();
 	}
-	void glCircled(mathSupport::vec2 xy, GLuint nPoly, GLdouble radius, mathSupport::vec3 rgb) {
+	void glCirclebd(mathSupport::vec2 xy, GLuint nPoly, GLdouble radius, GLdouble bias, mathSupport::vec3 rgb) {
 		glBegin(GL_TRIANGLE_FAN);
+		xy = xy+ bias;
 		glDotd(xy, rgb);
 		double a = M_PI * 2.0 / nPoly;
 		for (int i = 0;i <= nPoly;i++) {

@@ -10,7 +10,9 @@ public:
 	unsigned int y;
 	unsigned int benefit;
 
-	Apple(unsigned int x, unsigned int y, unsigned int benefit = 1) {
+	Apple (){}
+
+	void setup(unsigned int x, unsigned int y, unsigned int benefit = 1) {
 		sx = x;
 		sy = y;
 		this->benefit = benefit;

@@ -2,13 +2,10 @@
 #include <gl/GL.h>
 #include <chrono>
 #include "glSupport.h"
-#include "UITuner.h"
+#include "defines.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "winmm.lib")
-
-int sx = 500;
-int sy = 500;
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
@@ -29,8 +26,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
 	bool is_pause = false;
-	size_t t = 0;
-	UITuner ux (sx,sy);
 	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
 
 	/* register window class */
@@ -58,8 +53,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		sx,
-		sy,
+		WindowX,
+		WindowY,
 		NULL,
 		NULL,
 		hInstance,
@@ -99,18 +94,27 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 			if (!is_pause) {
 				/* OpenGL animation code goes here */
-				//glClearColor(0, 0, 0, 0.0f);
-				//glClear(GL_COLOR_BUFFER_BIT);
+				glClearColor(0.5, 0.5, 0.5, 0.0f);
+				glClear(GL_COLOR_BUFFER_BIT);
 
-				//glRotated(1, 0, 0, 1);
-
-				glSupport::glRectangled(ux.madeSquish(0, 0), ux.madeSquish((cos(t*0.001*M_PI)+1.0)/2.0* ux.getSizeX() / ux.getResolX(), 1), ux.madeColorInterpolate((cos((t) * 0.01) + 1.0) / 2.0));
-				glSupport::glCircled(ux.madeSquish(rand()%(ux.getSizeX()/ ux.getResolX()), rand() % (ux.getSizeY() / ux.getResolY())), 5, (double(ux.getResolX() + ux.getResolY()) / 2.0)/ (double(ux.getSizeX() + ux.getSizeY()) / 2.0), ux.appleColor());
+				glSupport::glRectangled(0, 0, PixelX, PixelY, 0, 0, 0);
+				glSupport::glRectangled(PixelX, 0, PixelX * 2.0, PixelY, 0, 0, 1);
+				glSupport::glRectangled(PixelX * 2.0, 0, PixelX * 3.0, PixelY, 0, 1, 0);
+				glSupport::glRectangled(PixelX * 3.0, 0, PixelX * 4.0, PixelY, 0, 1, 1);
+				glSupport::glRectangled(PixelX * 4.0, 0, PixelX * 5.0, PixelY, 1, 0, 0);
+				glSupport::glRectangled(PixelX * 5.0, 0, PixelX * 6.0, PixelY, 1, 0, 1);
+				glSupport::glRectangled(PixelX * 6.0, 0, PixelX * 7.0, PixelY, 1, 1, 0);
+				glSupport::glRectangled(PixelX * 7.0, 0, PixelX * 8.0, PixelY, 1, 1, 1);
+				glSupport::glRectangled(0, PixelY, PixelX, PixelY * 2.0, 0, 0, 1);
+				glSupport::glRectangled(0, PixelY * 2.0, PixelX, PixelY * 3.0, 0, 1, 0);
+				glSupport::glRectangled(0, PixelY * 3.0, PixelX, PixelY * 4.0, 0, 1, 1);
+				glSupport::glRectangled(0, PixelY * 4.0, PixelX, PixelY * 5.0, 1, 0, 0);
+				glSupport::glRectangled(0, PixelY * 5.0, PixelX, PixelY * 6.0, 1, 0, 1);
+				glSupport::glRectangled(0, PixelY * 6.0, PixelX, PixelY * 7.0, 1, 1, 0);
+				glSupport::glRectangled(0, PixelY * 7.0, PixelX, PixelY * 8.0, 1, 1, 1);
 
 				SwapBuffers(hDC);
-
 				theta += 1.0f;
-				t++;
 			}
 
 			end = std::chrono::system_clock::now();
