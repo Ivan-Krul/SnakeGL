@@ -6,14 +6,15 @@
 
 class Game {
 	Map map;
-	Snake snake;
-	Apple apple;
 
-	Game() {
+	Apple apple;
+public:
+	Snake snake;
+
+	void setup() {
 		map.setup(MapX,MapY);
 		snake.setup(MapX, MapY);
 		apple.setup(MapX, MapY);
-
 		map.fill(S_Void);
 
 		for (int i = 0;i < MapY;i++) {
@@ -26,9 +27,10 @@ class Game {
 		}
 	}
 
-	void Action(Snake::Keys dir) {
+	void action(Snake::Keys dir) {
 		if (snake.isAlive()) {
 			snake.move(dir);
+			snake.coliderTail();
 			apple.isEat(snake, map);
 			int sx = snake.getPosition(0).first;
 			int sy = snake.getPosition(0).second;
@@ -36,7 +38,7 @@ class Game {
 		}
 	}
 
-	void Write() {
+	void write() {
 		map.fill(S_Void);
 
 		for (int i = 0;i < MapY;i++) {
@@ -56,6 +58,10 @@ class Game {
 
 	char* executeMap() {
 		return map.executeMap();
+	}
+
+	bool isAlive() {
+		return snake.isAlive();
 	}
 
 };

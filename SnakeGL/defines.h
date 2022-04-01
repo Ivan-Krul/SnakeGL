@@ -3,8 +3,8 @@
 #define WindowX 500
 #define WindowY 500
 
-#define MapX 10
-#define MapY 10
+#define MapX 50
+#define MapY 50
 
 #define RelationWindowXY (double(WindowX)/double(WindowY))
 #define RelationWindowYX (double(WindowY)/double(WindowX))

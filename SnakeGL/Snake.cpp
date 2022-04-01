@@ -6,28 +6,32 @@ void Snake::setup(int mX, int mY) {
 	s.first = rand() % mX;
 	s.second = rand() % mY;
 	tail.push_back(s);
+	dir = Null;
 }
 
 void Snake::move(Keys tar) {
-	tar = dir;
+	if(tar!=Null)
+		dir = tar;
 
 	for (int i = tail.size() - 1;i > 1;i--)
 		tail[i - 1] = tail[i];
 
 	pair<int, int>& head = tail[0];
+	int& X = head.first;
+	int& Y = head.second;
 
 	switch (dir) {
 	case Snake::N:
-		head.second++;
+		Y++;
 		break;
 	case Snake::E:
-		head.first++;
+		X++;
 		break;
 	case Snake::S:
-		head.second--;
+		Y--;
 		break;
 	case Snake::W:
-		head.first--;
+		X--;
 		break;
 	default:
 		break;

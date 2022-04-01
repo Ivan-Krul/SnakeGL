@@ -9,7 +9,7 @@ class Snake {
 	vector<pair<int, int>> tail;
 	bool alive = true;
 public:
-enum Keys { N = 0, E, S, W } dir;
+enum Keys { Null = 0,N, E, S, W } dir;
 
 	Snake() {}
 

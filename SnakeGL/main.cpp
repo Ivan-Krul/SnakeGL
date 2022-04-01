@@ -1,7 +1,7 @@
 ﻿#include <windows.h>
 #include <gl/GL.h>
 #include <chrono>
-#include "glSupport.h"
+#include "UIPainter.h"
 #include "defines.h"
 
 #pragma comment(lib, "opengl32.lib")
@@ -25,7 +25,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	float theta = 0.0f;
 
 	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
+	srand(time(NULL));
 	bool is_pause = false;
+	UIPainter ux;
+	ux.setup();
 	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
 
 	/* register window class */
@@ -97,21 +100,28 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				glClearColor(0.5, 0.5, 0.5, 0.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 
-				glSupport::glRectangled(0, 0, PixelX, PixelY, 0, 0, 0);
-				glSupport::glRectangled(PixelX, 0, PixelX * 2.0, PixelY, 0, 0, 1);
-				glSupport::glRectangled(PixelX * 2.0, 0, PixelX * 3.0, PixelY, 0, 1, 0);
-				glSupport::glRectangled(PixelX * 3.0, 0, PixelX * 4.0, PixelY, 0, 1, 1);
-				glSupport::glRectangled(PixelX * 4.0, 0, PixelX * 5.0, PixelY, 1, 0, 0);
-				glSupport::glRectangled(PixelX * 5.0, 0, PixelX * 6.0, PixelY, 1, 0, 1);
-				glSupport::glRectangled(PixelX * 6.0, 0, PixelX * 7.0, PixelY, 1, 1, 0);
-				glSupport::glRectangled(PixelX * 7.0, 0, PixelX * 8.0, PixelY, 1, 1, 1);
-				glSupport::glRectangled(0, PixelY, PixelX, PixelY * 2.0, 0, 0, 1);
-				glSupport::glRectangled(0, PixelY * 2.0, PixelX, PixelY * 3.0, 0, 1, 0);
-				glSupport::glRectangled(0, PixelY * 3.0, PixelX, PixelY * 4.0, 0, 1, 1);
-				glSupport::glRectangled(0, PixelY * 4.0, PixelX, PixelY * 5.0, 1, 0, 0);
-				glSupport::glRectangled(0, PixelY * 5.0, PixelX, PixelY * 6.0, 1, 0, 1);
-				glSupport::glRectangled(0, PixelY * 6.0, PixelX, PixelY * 7.0, 1, 1, 0);
-				glSupport::glRectangled(0, PixelY * 7.0, PixelX, PixelY * 8.0, 1, 1, 1);
+				glLoadIdentity();
+				glTranslated(-1, -1, 0);
+				glScaled(2, 2, 0);
+
+				ux.logic();
+				ux.paint();
+
+				//glSupport::glRectangled(0, 0, PixelX, PixelY, 0, 0, 0);
+				//glSupport::glRectangled(PixelX, 0, PixelX * 2.0, PixelY, 0, 0, 1);
+				//glSupport::glRectangled(PixelX * 2.0, 0, PixelX * 3.0, PixelY, 0, 1, 0);
+				//glSupport::glRectangled(PixelX * 3.0, 0, PixelX * 4.0, PixelY, 0, 1, 1);
+				//glSupport::glRectangled(PixelX * 4.0, 0, PixelX * 5.0, PixelY, 1, 0, 0);
+				//glSupport::glRectangled(PixelX * 5.0, 0, PixelX * 6.0, PixelY, 1, 0, 1);
+				//glSupport::glRectangled(PixelX * 6.0, 0, PixelX * 7.0, PixelY, 1, 1, 0);
+				//glSupport::glRectangled(PixelX * 7.0, 0, PixelX * 8.0, PixelY, 1, 1, 1);
+				//glSupport::glRectangled(0, PixelY, PixelX, PixelY * 2.0, 0, 0, 1);
+				//glSupport::glRectangled(0, PixelY * 2.0, PixelX, PixelY * 3.0, 0, 1, 0);
+				//glSupport::glRectangled(0, PixelY * 3.0, PixelX, PixelY * 4.0, 0, 1, 1);
+				//glSupport::glRectangled(0, PixelY * 4.0, PixelX, PixelY * 5.0, 1, 0, 0);
+				//glSupport::glRectangled(0, PixelY * 5.0, PixelX, PixelY * 6.0, 1, 0, 1);
+				//glSupport::glRectangled(0, PixelY * 6.0, PixelX, PixelY * 7.0, 1, 1, 0);
+				//glSupport::glRectangled(0, PixelY * 7.0, PixelX, PixelY * 8.0, 1, 1, 1);
 
 				SwapBuffers(hDC);
 				theta += 1.0f;
@@ -120,7 +130,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			end = std::chrono::system_clock::now();
 			int time = std::chrono::duration_cast<std::chrono::nanoseconds>(end-beg).count();
 			time /= 100;
-			Sleep(1 + 16/(time));
+			Sleep(90.0/(double(time)/1000.0));
 		}
 	}
 
