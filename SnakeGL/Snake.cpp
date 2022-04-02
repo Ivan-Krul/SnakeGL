@@ -2,9 +2,11 @@
 #include "mathSupport.h"
 
 void Snake::setup(int mX, int mY) {
+	tail.clear();
+	alive = true;
 	pair<int, int> s;
-	s.first = rand() % mX;
-	s.second = rand() % mY;
+	s.first = 1 + rand() % (mX - 2);
+	s.second = 1 + rand() % (mY - 2);
 	tail.push_back(s);
 	dir = Null;
 }
@@ -13,8 +15,8 @@ void Snake::move(Keys tar) {
 	if(tar!=Null)
 		dir = tar;
 
-	for (int i = tail.size() - 1;i > 1;i--)
-		tail[i - 1] = tail[i];
+	for (int i = tail.size() - 1;i > 0;i--)
+		tail[i] = tail[i - 1];
 
 	pair<int, int>& head = tail[0];
 	int& X = head.first;

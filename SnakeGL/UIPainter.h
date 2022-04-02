@@ -1,9 +1,10 @@
 #pragma once
 #include "mathSupport.h"
 #include "defines.h"
-#include "soundSupport.h"
 #include "glSupport.h"
 #include "Game.h"
+
+#pragma comment(lib, "winmm.lib")
 
 class UIPainter {
 	mathSupport::vec3 ColorSnakeFirst;
@@ -19,7 +20,7 @@ public:
 		ColorSnakeFirst = ColorSnakeFirst / 256.0;
 
 		//Snake second #6b390b
-		ColorSnakeSecond = mathSupport::vec3(107,57,11);
+		ColorSnakeSecond = mathSupport::vec3(143,89,9);
 		ColorSnakeSecond = ColorSnakeSecond / 256.0;
 
 		//Apple #de1f4c
@@ -30,15 +31,15 @@ public:
 		ColorWall = mathSupport::vec3(18, 19, 117);
 		ColorWall = ColorWall / 256.0;
 
-		game.setup();
+		game.setup(1);
 	}
 
 	void logic() {
 		bool is_pushed = false;
-		if (GetAsyncKeyState('W') && !is_pushed) { game.action(Snake::N); is_pushed = true; }
-		if (GetAsyncKeyState('D') && !is_pushed) { game.action(Snake::E); is_pushed = true; }
-		if (GetAsyncKeyState('S') && !is_pushed) { game.action(Snake::S); is_pushed = true; }
-		if (GetAsyncKeyState('A') && !is_pushed) { game.action(Snake::W); is_pushed = true; }
+		if ((GetAsyncKeyState('W') || GetAsyncKeyState(VK_UP)) && !is_pushed) { game.action(Snake::N); is_pushed = true; }
+		if ((GetAsyncKeyState('D') || GetAsyncKeyState(VK_RIGHT)) && !is_pushed) { game.action(Snake::E); is_pushed = true; }
+		if ((GetAsyncKeyState('S') || GetAsyncKeyState(VK_DOWN)) && !is_pushed) { game.action(Snake::S); is_pushed = true; }
+		if ((GetAsyncKeyState('A') || GetAsyncKeyState(VK_LEFT)) && !is_pushed) { game.action(Snake::W); is_pushed = true; }
 		if (!is_pushed) game.action(Snake::Null);
 
 		game.write();
@@ -67,13 +68,62 @@ public:
 
 			glSupport::glRectangled(PixelX * x, PixelY * y, PixelX * (x + 1), PixelY * (y + 1), madeColorInterpolate(double(game.snake.getSize() - i) / double(game.snake.getSize())));
 		}
-		if(!game.isAlive()) glSupport::glRectangled(0,0, PixelX, PixelY, 1,1,1);
+		if (!game.isAlive()) {
+			glSupport::glRectangled(0, 0, PixelX, PixelY, 1, 1, 1);
+			
+			double X = PixelX * 1;
+			double Y = PixelY * (MapY - 1);
+			double thick = 10;
+			mathSupport::vec3 rgb(0,0,0);
+			rgb = rgb / 256.0;
+
+			glSupport::glLined(PixelX, PixelY,PixelX, PixelY*2.0, thick, rgb);
+			glSupport::glLined(PixelX, PixelY*2.0, PixelX*1.5, PixelY * 2.0, thick, rgb);
+			glSupport::glLined(PixelX * 1.5, PixelY * 2.0, PixelX * 1.5, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX, PixelY*1.5, PixelX * 1.5, PixelY * 1.5, thick, rgb);
+
+			glSupport::glLined(PixelX*2, PixelY, PixelX * 2, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX * 2, PixelY * 1.5, PixelX * 2.5, PixelY * 1.5, thick, rgb);
+
+			glSupport::glLined(PixelX * 3.0, PixelY, PixelX * 3.0, PixelY * 2.0, thick, rgb);
+			glSupport::glLined(PixelX * 3.0, PixelY*2.0, PixelX * 3.5, PixelY * 2.0, thick, rgb);
+			glSupport::glLined(PixelX * 3.0, PixelY * 1.5, PixelX * 3.5, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX * 3.0, PixelY, PixelX * 3.5, PixelY, thick, rgb);
+
+			glSupport::glLined(PixelX * 4.0, PixelY, PixelX * 4.5, PixelY, thick, rgb);
+			glSupport::glLined(PixelX * 4.5, PixelY, PixelX * 4.5, PixelY*1.5, thick, rgb);
+			glSupport::glLined(PixelX * 4.5, PixelY * 1.5, PixelX * 4.0, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX * 4.0, PixelY * 1.5, PixelX * 4.0, PixelY * 2.0, thick, rgb);
+			glSupport::glLined(PixelX * 4.5, PixelY * 2.0, PixelX * 4.0, PixelY * 2.0, thick, rgb);
+
+			glSupport::glLined(PixelX * 5.0, PixelY, PixelX * 5.5, PixelY, thick, rgb);
+			glSupport::glLined(PixelX * 5.5, PixelY, PixelX * 5.5, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX * 5.5, PixelY * 1.5, PixelX * 5.0, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX * 5.0, PixelY * 1.5, PixelX * 5.0, PixelY * 2.0, thick, rgb);
+			glSupport::glLined(PixelX * 5.5, PixelY * 2.0, PixelX * 5.0, PixelY * 2.0, thick, rgb);
+
+			glSupport::glLined(PixelX * 7.0, PixelY, PixelX * 7.0, PixelY * 2.0, thick, rgb);
+			glSupport::glLined(PixelX * 7.0, PixelY * 2.0, PixelX * 7.5, PixelY * 2.0, thick, rgb);
+			//glSupport::glLined(PixelX * 7.5, PixelY * 2.0, PixelX * 7.5, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX * 7.0, PixelY * 1.5, PixelX * 7.5, PixelY * 1.5, thick, rgb);
+
+			glSupport::glLined(PixelX * 8.5, PixelY, PixelX * 8.5, PixelY * 2.0, thick, rgb);
+			glSupport::glLined(PixelX * 8.0, PixelY * 1.5, PixelX * 8.5, PixelY * 1.5, thick, rgb);
+			glSupport::glLined(PixelX * 8.0, PixelY * 1.5, PixelX * 8.0, PixelY * 2.0, thick, rgb);
+		}
 	}
 
 	mathSupport::vec3 madeColorInterpolate(double num) {
 		mathSupport::vec3 s;
-		s = ((ColorSnakeFirst - ColorSnakeSecond) + ColorSnakeSecond)*num;
+		s = ((ColorSnakeFirst - ColorSnakeSecond) *num+ ColorSnakeSecond);
 		return s;
+	}
+
+	bool is_work() {
+		return game.isAlive();
+	}
+	int len() {
+		return game.len();
 	}
 };
 

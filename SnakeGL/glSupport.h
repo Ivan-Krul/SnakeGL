@@ -152,4 +152,34 @@ namespace glSupport {
 		}
 		glEnd();
 	}
+
+	void glLined(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, GLuint thickness, GLdouble r, GLdouble g, GLdouble b) {
+		glLineWidth(thickness);
+		glBegin(GL_LINES);
+		glColor3d(r, g, b);
+		glVertex2d(x1, y1);
+		glVertex2d(x2, y2);
+		glEnd();
+	}
+	void glLined(mathSupport::vec2 xy1, mathSupport::vec2 xy2, GLuint thickness, GLdouble r, GLdouble g, GLdouble b) {
+		glLineWidth(thickness);
+		glBegin(GL_LINES);
+		glDotd(xy1, r, g, b);
+		glDotd(xy2, r, g, b);
+		glEnd();
+	}
+	void glLined(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2, GLuint thickness, mathSupport::vec3 rgb) {
+		glLineWidth(thickness);
+		glBegin(GL_LINES);
+		glDotd(x1,y1, rgb);
+		glDotd(x2,y2, rgb);
+		glEnd();
+	}
+	void glLined(mathSupport::vec2 xy1, mathSupport::vec2 xy2, GLuint thickness, mathSupport::vec3 rgb) {
+		glLineWidth(thickness);
+		glBegin(GL_LINES);
+		glDotd(xy1, rgb);
+		glDotd(xy2, rgb);
+		glEnd();
+	}
 }

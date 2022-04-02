@@ -157,6 +157,7 @@
     <ClInclude Include="UIPainter.h" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="..\..\..\..\..\Chrome Downloads\sound\april_2012.wav" />
     <Media Include="Nom.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

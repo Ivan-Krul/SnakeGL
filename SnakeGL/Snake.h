@@ -7,7 +7,7 @@ using std::pair;
 
 class Snake {
 	vector<pair<int, int>> tail;
-	bool alive = true;
+	bool alive;
 public:
 enum Keys { Null = 0,N, E, S, W } dir;
 

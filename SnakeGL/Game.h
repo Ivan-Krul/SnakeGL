@@ -4,17 +4,22 @@
 #include "Apple.h"
 #include "defines.h"
 
+#pragma comment(lib, "winmm.lib")
+
 class Game {
 	Map map;
-
-	Apple apple;
+	unsigned int nApple;
+	Apple* apple;
 public:
 	Snake snake;
 
-	void setup() {
+	void setup(unsigned int nApple) {
 		map.setup(MapX,MapY);
 		snake.setup(MapX, MapY);
-		apple.setup(MapX, MapY);
+		apple = new Apple[nApple];
+		for(int i=0;i<nApple;i++)
+			apple[i].setup(MapX, MapY,1);
+		this->nApple = nApple;
 		map.fill(S_Void);
 
 		for (int i = 0;i < MapY;i++) {
@@ -27,11 +32,16 @@ public:
 		}
 	}
 
+	int len() {
+		return snake.getSize();
+	}
+
 	void action(Snake::Keys dir) {
 		if (snake.isAlive()) {
 			snake.move(dir);
 			snake.coliderTail();
-			apple.isEat(snake, map);
+			for(int i=0;i<nApple;i++)
+				apple[i].isEat(snake, map);
 			int sx = snake.getPosition(0).first;
 			int sy = snake.getPosition(0).second;
 			if (map.getMap(sx, sy) == S_Wall) snake.madeDeath();
@@ -53,7 +63,8 @@ public:
 		for (int i = 0;i < snake.getSize();i++)
 			map.setMap(snake.getPosition(i).first, snake.getPosition(i).second, S_Snake);
 
-		map.setMap(apple.x, apple.y, S_Apple);
+		for (int i = 0;i < nApple;i++)
+			map.setMap(apple[i].x, apple[i].y, S_Apple);
 	}
 
 	char* executeMap() {
@@ -62,6 +73,11 @@ public:
 
 	bool isAlive() {
 		return snake.isAlive();
+	}
+
+	~Game()
+	{
+		delete[] apple;
 	}
 
 };

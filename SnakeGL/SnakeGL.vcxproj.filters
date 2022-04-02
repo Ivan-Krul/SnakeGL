@@ -64,5 +64,8 @@
     <Media Include="Nom.wav">
       <Filter>Файлы ресурсов</Filter>
     </Media>
+    <Media Include="..\..\..\..\..\Chrome Downloads\sound\april_2012.wav">
+      <Filter>Файлы ресурсов</Filter>
+    </Media>
   </ItemGroup>
 </Project>

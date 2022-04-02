@@ -11,6 +11,9 @@ LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
 
+bool is_pause = false;
+UIPainter ux;
+
 int WINAPI WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
@@ -26,9 +29,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
 	srand(time(NULL));
-	bool is_pause = false;
-	UIPainter ux;
 	ux.setup();
+	bool is_music = false;
 	//жжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж
 
 	/* register window class */
@@ -70,7 +72,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	//PlaySoundW(L"D:\\Chrome Downloads\\sound\\YinYang_WhenImByYou.wav", NULL, SND_ASYNC);
 
-	std::chrono::system_clock::time_point beg, end;
+	std::chrono::system_clock::time_point beg = std::chrono::system_clock::now(), end;
 
 	/* program main loop */
 	while (!bQuit)
@@ -92,45 +94,50 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		}
 		else
 		{
-			beg = std::chrono::system_clock::now();
 			if (GetAsyncKeyState(' ')) { is_pause = !is_pause; Sleep(100); }
 
 			if (!is_pause) {
 				/* OpenGL animation code goes here */
-				glClearColor(0.5, 0.5, 0.5, 0.0f);
+				glClearColor(0.1, 0.1, 0.7, 0.0f);
 				glClear(GL_COLOR_BUFFER_BIT);
 
 				glLoadIdentity();
 				glTranslated(-1, -1, 0);
 				glScaled(2, 2, 0);
 
+				if (is_music) {
+					PlaySound(NULL, 0, 0);
+					is_music = false;
+				}
+
 				ux.logic();
 				ux.paint();
 
-				//glSupport::glRectangled(0, 0, PixelX, PixelY, 0, 0, 0);
-				//glSupport::glRectangled(PixelX, 0, PixelX * 2.0, PixelY, 0, 0, 1);
-				//glSupport::glRectangled(PixelX * 2.0, 0, PixelX * 3.0, PixelY, 0, 1, 0);
-				//glSupport::glRectangled(PixelX * 3.0, 0, PixelX * 4.0, PixelY, 0, 1, 1);
-				//glSupport::glRectangled(PixelX * 4.0, 0, PixelX * 5.0, PixelY, 1, 0, 0);
-				//glSupport::glRectangled(PixelX * 5.0, 0, PixelX * 6.0, PixelY, 1, 0, 1);
-				//glSupport::glRectangled(PixelX * 6.0, 0, PixelX * 7.0, PixelY, 1, 1, 0);
-				//glSupport::glRectangled(PixelX * 7.0, 0, PixelX * 8.0, PixelY, 1, 1, 1);
-				//glSupport::glRectangled(0, PixelY, PixelX, PixelY * 2.0, 0, 0, 1);
-				//glSupport::glRectangled(0, PixelY * 2.0, PixelX, PixelY * 3.0, 0, 1, 0);
-				//glSupport::glRectangled(0, PixelY * 3.0, PixelX, PixelY * 4.0, 0, 1, 1);
-				//glSupport::glRectangled(0, PixelY * 4.0, PixelX, PixelY * 5.0, 1, 0, 0);
-				//glSupport::glRectangled(0, PixelY * 5.0, PixelX, PixelY * 6.0, 1, 0, 1);
-				//glSupport::glRectangled(0, PixelY * 6.0, PixelX, PixelY * 7.0, 1, 1, 0);
-				//glSupport::glRectangled(0, PixelY * 7.0, PixelX, PixelY * 8.0, 1, 1, 1);
+				
 
 				SwapBuffers(hDC);
 				theta += 1.0f;
 			}
 
+
+			if (is_pause) {
+				if (!is_music) {
+					soundSupport::sound(L"april_2012.wav", SND_ASYNC); // by TobyFox
+					is_music = true;
+				}
+			}
+
 			end = std::chrono::system_clock::now();
-			int time = std::chrono::duration_cast<std::chrono::nanoseconds>(end-beg).count();
-			time /= 100;
-			Sleep(90.0/(double(time)/1000.0));
+			int time = std::chrono::duration_cast<std::chrono::microseconds>(end-beg).count();
+			beg = std::chrono::system_clock::now();
+			std::wstring a = L"SnakeGL";
+			if (!ux.is_work()) a += L" Your snake was stuck, its length was " + std::to_wstring(ux.len()) + L" cm";
+			else a += L" length - " +std::to_wstring(ux.len()) + L" cm ";
+			a += L" FPS - ";
+			a += std::to_wstring(double(pow(10, 6) / time));
+			SetWindowText(hwnd, a.c_str());
+			Sleep(time / (0.125*pow(10, 4)));
+
 		}
 	}
 
@@ -154,6 +161,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		return 0;
 
+	case WM_LBUTTONDOWN:
+
 	case WM_KEYDOWN:
 	{
 		switch (wParam)
@@ -161,6 +170,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case VK_ESCAPE:
 			PostQuitMessage(0);
 			break;
+		case VK_F4:
+			ux.setup();
 		}
 	}
 	break;
