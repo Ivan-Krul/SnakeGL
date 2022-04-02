@@ -136,7 +136,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			a += L" FPS - ";
 			a += std::to_wstring(double(pow(10, 6) / time));
 			SetWindowText(hwnd, a.c_str());
-			Sleep(time / (0.125*pow(10, 4)));
+			Sleep(time / (0.115*pow(10, 4)));
 
 		}
 	}
